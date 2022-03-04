@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <title>Home</title>
+    <title>Home Post</title>
 </head>
 <body>
 
@@ -50,11 +50,11 @@
 
                                             <tr>
                                             <th scope="col">ID</th>
-                                            <th scope="col">Image</th>
+                                            
                                             <th scope="col">Name</th>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Description</th>
+                                            <th scope="col">Category</th>
+                                            
+                                            <th scope="col">Content</th>
                                             <th scope="col">Edit</th>
                                             <th scope="col">Delete</th>
                                             </tr>
@@ -63,9 +63,9 @@
                                         <?php
                                         include 'connectdb.php';
 
-                                            $result =  mysqli_query($db_handle, "SELECT items.*, category.name AS cat_name 
-                                                                                FROM items INNER JOIN category 
-                                                                                ON items.cat_id = category.id ORDER BY id DESC");
+                                            $result =  mysqli_query($db_handle, "SELECT post.*, post_cat.name AS cat_name 
+                                                                                    FROM  INNER JOIN post_cat 
+                                                                                    ON items.cat_id = category.id ORDER BY id DESC");
 
                                         
 
@@ -74,15 +74,14 @@
                                                 
                                                 <tr>
                                                 <th scope="row"><?php echo $row['id'];?></th>
-
-                                                <td><img style="height: 100px; width: 120px" src="./upload/<?php echo $row['img'];?>" alt=""></td>
+                                               
 
                                                 <td><?php echo $row['name'];?></td>
 
-                                                <td><?php echo $row['cat_name'];?></td>
+                                                <td><?php ?></td>
                                                 
-                                                <td><?php echo $row['price'];?></td>
-                                                <td><?php echo $row['des'];?></td>
+                                                
+                                                <td><?php echo $row['content'];?></td>
                                                 
                                                 <td><a href="edit.php?id=<?php echo $row['id']; ?>">Edit</a></td>
 
