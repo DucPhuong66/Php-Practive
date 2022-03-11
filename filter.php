@@ -64,7 +64,7 @@
                                         <?php
                                         include 'connectdb.php';
 
-                                        echo $type_id = $_GET['type'];
+                                         $type_id = $_GET['type'];
 
                                         $search = $_GET['search'];
                                         
@@ -87,12 +87,6 @@
                                                                         WHERE items.cat_id = $type_id AND items.name = '$search' 
                                                                         ORDER BY id DESC");
                                         }
-
-                                        
-
-                                       
-
-                                        
 
                                         while($row = mysqli_fetch_array($result)){
                                         ?> 

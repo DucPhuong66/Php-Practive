@@ -62,7 +62,6 @@
 
         $result = mysqli_query($db_handle, "SELECT * FROM items WHERE id = '". $_GET['id']. "'");
         $row = mysqli_fetch_array($result);
-
 ?>
 <div class="container">
 
@@ -90,12 +89,14 @@
                         <select class="form-control" name="cat_id">                       
                             <?php 
                             include 'connectdb.php';
+                            
                             $sql_cat = mysqli_query($db_handle, "SELECT * FROM category ORDER BY id DESC");
                                     while ($sql = mysqli_fetch_array($sql_cat)) { ?> 
-                                        <option value="<?php echo $sql['id'];?>" <?=$row['cat_id'] == $sql['id'] ? ' selected="selected"' : '';?>><?php echo $sql['name'];?></option>
+                                        
+                                        <option value="<?php echo $sql['id'];?>" <?= $row['cat_id'] == $sql['id'] ? ' selected="selected"' : '';?>><?php echo $sql['name'];?></option>
                                         
                             <?php } ?>                       
-                                </select>
+                        </select>
                     </div>
                         
                     

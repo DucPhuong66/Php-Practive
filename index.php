@@ -37,7 +37,7 @@
                                                     <?php } ?>
                                                 </select>
                                                 <input type="text" name="search" placeholder="Search">
-                                                    <button class="btn btn-primary" value="find" name="type-find">
+                                                    <button class="btn btn-primary" value="find">
                                                         Find
                                                     </button>
                                             </form>

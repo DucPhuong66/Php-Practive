@@ -20,52 +20,21 @@
 <body>
 
 <?php 
-
-            if (isset($_POST['uploadclicked']))
-            {
-                $name_img = "";
-                // Nếu người dùng có chọn file để upload
-                if (isset($_FILES['img']))
-                {
-                    // Nếu file upload bị lỗi,
-                    // Tức là thuộc tính error > 0
-                    if ($_FILES['img']['error'] > 0)
-                    {
-                        echo 'File Upload Bị Lỗi';
-                    }
-                    else{
-                        // Upload file
-                        $name_img = $_FILES['img']['name'];
-                        move_uploaded_file($_FILES['img']['tmp_name'], './upload/'.$name_img);                                 
-                        echo 'File Uploaded';
-                    }
-                } 
-                // không chọn file
-                $img = ($name_img!="") ?  $name_img : $_POST['img_hidden'];
-                
-            }
-
-
-            //". $_FILES['img']['name']."
         
         include 'connectdb.php';
         if (count ($_POST) > 0) {
-        mysqli_query($db_handle, "UPDATE items set  img = '".$img."',
-                                                    name = '". $_POST['name']."',
-                                                    price = '". $_POST['price']."',
-                                                    des = '". $_POST['des']. "',
-                                                    cat_id = '". $_POST['cat_id']. "' 
-                                WHERE id = '". $_GET['id']."'");
+        mysqli_query($db_handle, "UPDATE post set  name = '". $_POST['name']."',
+                                                   
+                                                    content = '". $_POST['content']. "' ,
+                                                    WHERE id = '". $_GET['id']."'");
         $message = "Updated";
         header ('Location: http://localhost:8080/Test/', true);
     }
-
-        $result = mysqli_query($db_handle, "SELECT * FROM items WHERE id = '". $_GET['id']. "'");
+        $result = mysqli_query($db_handle, "SELECT * FROM post WHERE id = '". $_GET['id']."'");
         $row = mysqli_fetch_array($result);
 
 ?>
 <div class="container">
-
             <h3>Update</h3>
             <form method ="POST" enctype="multipart/form-data">
 
@@ -73,44 +42,36 @@
                 </div>
 
                     <div class="form-group">
-                        <label>Image <?php echo $row['img']; ?></label> 
-                        <input type="file" class="form-control" name="img" require> 
-                        <input type="hidden" value="<?php echo $row['img']; ?>" class="form-control" name="img_hidden"> 
-                    </div>
-
-                    
-
-                    <div class="form-group">
                         <label for="exampleInputEmail1">Name</label>
                         <input  class="form-control"  name ="name" value="<?php echo $row['name']; ?>" >
                     </div>
 
                     <div class="form-group">
-                        <label>Type</label>   
-                        <select class="form-control" name="cat_id">                       
+                        <label>Category</label>  <br>               
                             <?php 
                             include 'connectdb.php';
-                            $sql_cat = mysqli_query($db_handle, "SELECT * FROM category ORDER BY id DESC");
-                                    while ($sql = mysqli_fetch_array($sql_cat)) { ?> 
-                                        <option value="<?php echo $sql['id'];?>" <?=$row['cat_id'] == $sql['id'] ? ' selected="selected"' : '';?>><?php echo $sql['name'];?></option>
-                                        
-                            <?php } ?>                       
-                                </select>
-                    </div>
-                        
-                    
+                            
+                            $data_fill = mysqli_query($db_handle, "SELECT post_inner_postcat.postcat_id AS cat_id 
+                                                                        FROM post INNER JOIN post_inner_postcat 
+                                                                        ON post.id = post_inner_postcat.post_id 
+                                                                        WHERE post_inner_postcat.post_id =  '". $_GET['id']. "'");
 
-                    <div class="form-group">
-                        <label >Price</label>
-                        <input  class="form-control"  name ="price"  value="<?php echo $row['price']; ?>">
+                            while ($data  = mysqli_fetch_array($data_fill)){   
+                                $sql_cat = mysqli_query($db_handle, "SELECT * FROM post_cat ORDER BY id DESC");
+                                // echo $data('cat_id');
+                                while ($sql = mysqli_fetch_array($sql_cat)) {
+                                    echo $sql['id'];
+                                    ?>   
+                                    <input type="checkbox" name="cat_name" value="<?php echo $sql['id'];?>" <?= $data['cat_id'] == $sql['id'] ? ' checked="checked"' : '';?>  >
+                                    <?php echo $sql['name'];?>                           
+                            <?php }}; ?> 
                     </div>
-
                     <div class="form-group">
-                        <label >Description</label>
-                        <input  class="form-control"  name="des" value="<?php echo $row['des']; ?>">
+                        <label >Content</label>
+                        <input  class="form-control"  name="content" value="<?php echo $row['content']; ?>">
                     </div>
                     
-                    <button type="submit" class="btn btn-primary" name="uploadclicked">Update</button>
+                    <button type="submit" class="btn btn-primary" name="">Update</button>
 
             
             </form>

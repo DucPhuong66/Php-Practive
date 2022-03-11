@@ -15,34 +15,27 @@
                     <table class="table">
                                     <a href="./insert.php">Insert 
 
-                                    </a>    
-                                    
-
-                                    
-                                    
+                                    </a>         
                                 <thead>
-
                                 <tr>
                                             <th colspan="3"></th>
                                             <th scope="col">
                                             <form method="GET" action="filter.php">
-                                                <label>Filter</label>                          
-                                                <select name="type" class="form-control">
-                                                    <option value="">--Type--</option>
+                                                <label>Filter</label>   <br>                       
+                                                
                                                     <?php 
                                                     include 'connectdb.php';
-                                                    $sql_cat = mysqli_query($db_handle, "SELECT * FROM category ORDER BY id DESC");
+                                                    $sql_cat = mysqli_query($db_handle, "SELECT * FROM post_cat ORDER BY id DESC");
                                                             while ($row = mysqli_fetch_array($sql_cat)) { ?>
-                                                                <option value="<?php echo $row['id']; ?>"><?php echo $row['name'];?></option>
+                                                                <input type="checkbox" name='cat' value="<?php echo $row['id']; ?>"><?php echo $row['name'];?><br>
                                                     <?php } ?>
-                                                </select>
+                                             
                                                 <input type="text" name="search" placeholder="Search">
-                                                    <button class="btn btn-primary" value="find" name="type-find">
+                                                    <button class="btn btn-primary" value="find">
                                                         Find
                                                     </button>
                                             </form>
                                             </th>
-                                            
                                             
                                             <th colspan="4"></th>
                                             
@@ -63,22 +56,28 @@
                                         <?php
                                         include 'connectdb.php';
 
-                                            $result =  mysqli_query($db_handle, "SELECT post.*, post_cat.name AS cat_name 
-                                                                                    FROM  INNER JOIN post_cat 
-                                                                                    ON items.cat_id = category.id ORDER BY id DESC");
-
-                                        
+                                        $result =  mysqli_query($db_handle, "SELECT * FROM post ORDER BY id DESC");
 
                                         while($row = mysqli_fetch_array($result)){
-                                        ?> 
-                                                
+                                            $id_post = $row['id'];
+                                            ?> 
                                                 <tr>
                                                 <th scope="row"><?php echo $row['id'];?></th>
-                                               
-
                                                 <td><?php echo $row['name'];?></td>
+                                                <td><?php 
+                                                    $sql_cate = "SELECT  post_cat.id, post_cat.name AS cat_name 
+                                                                    FROM post_cat INNER JOIN post_inner_postcat 
+                                                                    ON post_cat.id = post_inner_postcat.postcat_id WHERE post_inner_postcat.post_id = $id_post  ORDER BY id DESC" ;
 
-                                                <td><?php ?></td>
+                                                    $data_cat_name = mysqli_query($db_handle, $sql_cate);   
+                                                    while($cat = mysqli_fetch_array($data_cat_name)){
+                                                        echo  $cat['cat_name'];
+                                                        echo '<br>';
+                                                    }   
+                                                    
+                                                   
+                                                    
+                                               ?> </td>
                                                 
                                                 
                                                 <td><?php echo $row['content'];?></td>

@@ -14,7 +14,7 @@
 <body>
 
 
-    <?php if (isset($_REQUEST['name']) && isset($_REQUEST['price']) && isset($_REQUEST['des'])): ?>
+    <?php if (isset($_POST['name']) && isset($_POST['price']) && isset($_POST['des'])): ?>
 
     <?php
 
@@ -44,10 +44,10 @@
     }
     
     $img = $_FILES['img']['name'];
-    $name = $_REQUEST['name'];
-    $type = $_REQUEST['type'];
-    $price = $_REQUEST['price'];
-    $des = $_REQUEST['des'];
+    $name = $_POST['name'];
+    $type = $_POST['type'];
+    $price = $_POST['price'];
+    $des = $_POST['des'];
     // Insert
     $sql = "INSERT INTO items (name, price, des, img, cat_id) VALUES ('$name', '$price', '$des', '$img', '$type')";
     if (mysqli_query($db_handle,$sql)){
@@ -80,17 +80,22 @@
                     <div class="form-group">
                          <label>Type</label> 
                                 <div class="form-group"> 
-                                    
+
+
+                                <select name="type" class="form-control">
                                     <?php 
                                     include 'connectdb.php';
                                     $sql_cat = mysqli_query($db_handle, "SELECT * FROM category ORDER BY id DESC");
                                             while ($row = mysqli_fetch_array($sql_cat)) { ?>
-                                                <input type="checkbox" name="type" value="<?php echo $row['id']; ?>" /> <?php echo $row['name'];?>
+                                                <option value="<?php echo $row['id']; ?>"><?php echo $row['name'];?></option>
                                     <?php } ?>
-                                    
+                                </select>
                                 </div>
                             
                     </div>
+
+
+                    
 
 
                     <div class="form-group">
