@@ -29,7 +29,7 @@ $cat_name = (isset($_POST['cat_name'])) ? $_POST['cat_name'] : "";
 $sql_post = "INSERT INTO post (name, content) VALUES ('$post_name', '$post_content')";
 $data_post = mysqli_query($db_handle,$sql_post);
 $id_post_insert = mysqli_insert_id($db_handle);
-// echo 'id post insert: ' .$id_post_insert;
+
 
 if($data_post):
 foreach ($cat_name as $value){
@@ -40,11 +40,6 @@ endif;
 
 header ('Location: http://localhost:8080/Test/post', true);
 
-// if (mysqli_query($db_handle,$sql)){
-//     //header ('Location: http://localhost:8080/Test/post', true);
-// } else {
-//     echo "<h3>Error</h3>";
-// }
 
     ?>
 

@@ -41,10 +41,8 @@
                             </tr>
                             <tr>
                             <th scope="col">ID</th>
-                            
                             <th scope="col">Name</th>
                             <th scope="col">Category</th>
-                            
                             <th scope="col">Content</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
